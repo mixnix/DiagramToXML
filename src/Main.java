@@ -1,4 +1,6 @@
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,13 +32,36 @@ public class Main {
 
             Document doc = dBuilder.newDocument();
 
+            Element rootElement = doc.createElement("level_layout");
+            doc.appendChild(rootElement);
+
             String[] lines = level.split("\\r\\n|\\r|\\n");
             int num_of_lines = lines.length;
 
             for(int n = 0; n < num_of_lines; ++n){
-                for(int i = 1; i <= lines[n].length(); ++i){
-                    //here converting to xml elements will beK
+
+                //  supercars element
+                Element line = doc.createElement("line"+(n+1));
+                rootElement.appendChild(line);
+
+                for(int i = 0; i < lines[n].length(); ++i){
+                    char temp = lines[n].charAt(i);
+
+                    if(temp == '#'){
+                        // carname element
+                        Element field = doc.createElement("field");
+                        field.appendChild(
+                                doc.createTextNode("wall"));
+                        line.appendChild(field);
+                    } else if(temp == ' '){
+                        // carname element
+                        Element field = doc.createElement("field");
+                        field.appendChild(
+                                doc.createTextNode("empty_field"));
+                        line.appendChild(field);
+                    }
                 }
+
             }
 
 
@@ -45,7 +70,7 @@ public class Main {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("C:\\wyjsciowe_pliki\\cars.xml"));
+            StreamResult result = new StreamResult(new File("C:\\wyjsciowe_pliki\\diagram.xml"));
             transformer.transform(source, result);
             // Output to console for testing
             StreamResult consoleResult = new StreamResult(System.out);
