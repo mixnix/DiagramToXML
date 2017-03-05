@@ -15,11 +15,11 @@ import java.io.File;
  */
 public class Main {
     private static String level = "##########\n" +
+            "#  @     #\n" +
+            "#$$$$    #\n" +
             "#        #\n" +
             "#        #\n" +
-            "#        #\n" +
-            "#        #\n" +
-            "#        #\n" +
+            "#%%%%    #\n" +
             "#        #\n" +
             "#        #\n" +
             "#        #\n" +
@@ -41,7 +41,7 @@ public class Main {
             for(int n = 0; n < num_of_lines; ++n){
 
                 //  supercars element
-                Element line = doc.createElement("line"+(n+1));
+                Element line = doc.createElement("line");
                 rootElement.appendChild(line);
 
                 for(int i = 0; i < lines[n].length(); ++i){
@@ -58,6 +58,21 @@ public class Main {
                         Element field = doc.createElement("field");
                         field.appendChild(
                                 doc.createTextNode("empty_field"));
+                        line.appendChild(field);
+                    } else if(temp == '@'){
+                        Element field = doc.createElement("field");
+                        field.appendChild(
+                                doc.createTextNode("player"));
+                        line.appendChild(field);
+                    } else if(temp == '$'){
+                        Element field = doc.createElement("field");
+                        field.appendChild(
+                                doc.createTextNode("box"));
+                        line.appendChild(field);
+                    } else if(temp == '%'){
+                        Element field = doc.createElement("field");
+                        field.appendChild(
+                                doc.createTextNode("end_position"));
                         line.appendChild(field);
                     }
                 }
